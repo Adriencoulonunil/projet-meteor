@@ -20,6 +20,16 @@
                     {{> task}}
                 {{/each}}
             </ul>
+            
+            <div class="filter">
+                <button id="hide-completed-button">
+                    {{#if hideCompleted}}
+                            Show All
+                    {{else}}
+                            Hide Completed
+                    {{/if}}
+                </button>
+            </div>
         </div>
     </div>
 </template>
