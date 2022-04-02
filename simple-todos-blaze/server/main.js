@@ -12,7 +12,7 @@ const insertTask = (taskText, user) =>
 
 const SEED_USERNAME = 'meteorite';
 const SEED_PASSWORD = 'password';
- 
+
 Meteor.startup(() => {
   if (!Accounts.findUserByUsername(SEED_USERNAME)) {
     Accounts.createUser({
@@ -31,7 +31,7 @@ Meteor.startup(() => {
       'Fourth Task',
       'Fifth Task',
       'Sixth Task',
-      'Seventh Task'
+      'Seventh Task',
     ].forEach(taskText => insertTask(taskText, user));
   }
 });
