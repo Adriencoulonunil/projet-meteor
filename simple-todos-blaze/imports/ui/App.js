@@ -1,12 +1,14 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { TasksCollection } from '../db/TasksCollection';
+import { Tracker } from 'meteor/tracker';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import './App.html';
 import './Task.js';
 import './Login.js';
 
 const HIDE_COMPLETED_STRING = 'hideCompleted';
+const IS_LOADING_STRING = 'isLoading';
 
 const getUser = () => Meteor.user();
 const isUserLogged = () => !!getUser();
@@ -25,6 +27,11 @@ const getTasksFilter = () => {
 
 Template.mainContainer.onCreated(function mainContainerOnCreated() {
   this.state = new ReactiveDict();
+
+  const handler = Meteor.subscribe('tasks');
+  Tracker.autorun(() => {
+    this.state.set(IS_LOADING_STRING, !handler.ready());
+  });
 });
 
 Template.mainContainer.events({
@@ -75,6 +82,10 @@ Template.mainContainer.helpers({
   },
   getUser() {
     return getUser();
+  },
+  isLoading() {
+    const instance = Template.instance();
+    return instance.state.get(IS_LOADING_STRING);
   },
 });
 
